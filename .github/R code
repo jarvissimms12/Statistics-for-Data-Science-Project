@@ -4,7 +4,7 @@ library(dplyr)
 library(ggplot2)
 
 # Specify the file path to your dataset
-file_path <- "path/to/your/dataset.csv"
+file_path <- "creditcard_csv.csv"
 
 # Read the dataset into a data frame
 df <- read_csv(file_path)
