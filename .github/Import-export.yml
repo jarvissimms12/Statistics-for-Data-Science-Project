@@ -1,0 +1,59 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load your dataset (replace 'your_dataset.csv' with your actual file or DataFrame)
+# df = pd.read_csv('your_dataset.csv')
+
+# Assuming 'Amount' is the column containing the transferred money
+# Replace it with the actual column name if different
+
+# 1. Dimension of the dataset
+print("1. Dimension of the dataset:")
+print(df.shape)
+
+# 2. First and last five transactions
+print("\n2. First and last five transactions:")
+print(df.head())
+print(df.tail())
+
+# 3. Check for null values
+print("\n3. Check for null values:")
+print(df.isnull().sum())
+
+# 4. Names of features in the dataset
+print("\n4. Names of features in the dataset:")
+print(df.columns)
+
+# 5. Quartile information on the amount of transferred money
+print("\n5. Quartile information on the amount of transferred money:")
+print(df['Amount'].describe())
+
+# 6. Variance and standard deviation of the amount of transferred money
+print("\n6. Variance and standard deviation of the amount of transferred money:")
+print("Variance:", df['Amount'].var())
+print("Standard Deviation:", df['Amount'].std())
+
+# 7. Number of transactions with amounts more than the mean value
+mean_amount = df['Amount'].mean()
+print("\n7. Number of transactions with amounts more than the mean value:")
+print(len(df[df['Amount'] > mean_amount]))
+
+# 8. Violin plots for Fraud and Normal classes
+print("\n8. Violin plots for Fraud and Normal classes:")
+plt.figure(figsize=(10, 6))
+sns.violinplot(x='Class', y='Amount', data=df, inner='box')
+plt.title('Violin Plot of Amount for Fraud and Normal Classes')
+plt.show()
+
+# 9. Shape of the violin plot and normal distribution
+print("\n9. Shape of the violin plot and normal distribution:")
+# The shape of the violin plot can provide insights into the distribution,
+# but it's not a direct measure of normality.
+# You may also want to check skewness and kurtosis for more information.
+
+# You can use the following to check skewness and kurtosis:
+print("Skewness:", df['Amount'].skew())
+print("Kurtosis:", df['Amount'].kurt())
+
+# The above values can help assess normality characteristics.
