@@ -1,0 +1,41 @@
+# Load necessary libraries
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# Specify the file path to your dataset
+file_path <- "path/to/your/dataset.csv"
+
+# Read the dataset into a data frame
+df <- read_csv(file_path)
+
+# Display the dimensions of the dataset
+cat("Dimensions of the dataset:", dim(df), "\n")
+
+# Display the first and last five transactions
+cat("First five transactions:\n", head(df), "\n")
+cat("Last five transactions:\n", tail(df), "\n")
+
+# Check for null values
+cat("Null values in the dataset:\n", colSums(is.na(df)), "\n")
+
+# Display the names of the features in the dataset
+cat("Feature names:\n", names(df), "\n")
+
+# Quartile information on the amount of transferred money
+cat("Quartile information on amount:\n", summary(df$Amount), "\n")
+
+# Variance and standard deviation of the amount
+cat("Variance of amount:", var(df$Amount), "\n")
+cat("Standard deviation of amount:", sd(df$Amount), "\n")
+
+# Count of transactions with amounts more than the mean
+mean_amount <- mean(df$Amount)
+count_greater_than_mean <- sum(df$Amount > mean_amount)
+cat("Number of transactions with amounts more than the mean:", count_greater_than_mean, "\n")
+
+# Violin plots for Fraud and Normal classes
+ggplot(df, aes(x = Class, y = Amount, fill = Class)) +
+  geom_violin(scale = "width", inner = "box") +
+  labs(title = "Violin Plot of Amount for Fraud and Normal Classes") +
+  theme_minimal()
