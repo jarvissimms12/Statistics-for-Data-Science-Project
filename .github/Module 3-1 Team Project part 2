@@ -1,0 +1,36 @@
+# Install and load the caTools package
+install.packages("caTools")
+library(caTools)
+
+# Set a seed value for reproducibility
+set.seed(123)
+
+# Assuming your original dataset is stored in a data frame called 'original_data'
+# Make sure to replace 'original_data.csv' with the actual data frame you have
+
+# Load the dataset
+original_data <- read.csv("original_data.csv")
+
+# Set the split ratio (75%/25%)
+split_ratio <- 0.75
+
+# Split the dataset into train and test sets
+split <- sample.split(original_data$Class, SplitRatio = split_ratio)
+train_data <- subset(original_data, split == TRUE)
+test_data <- subset(original_data, split == FALSE)
+
+# Print out the dimensions of the train and test sets
+cat("Dimensions of the training set:", dim(train_data), "\n")
+cat("Dimensions of the test set:", dim(test_data), "\n")
+
+# Summary of train and test sets
+cat("\nSummary of the training set:\n")
+summary(train_data)
+
+cat("\nSummary of the test set:\n")
+summary(test_data)
+
+# Create a histogram plot based on the 'Amount' feature for the two sets
+par(mfrow = c(1, 2))  # Set up a 1x2 grid for plotting
+hist(train_data$Amount, main = "Train Set - Amount", xlab = "Amount", col = "skyblue")
+hist(test_data$Amount, main = "Test Set - Amount", xlab = "Amount", col = "lightcoral")
