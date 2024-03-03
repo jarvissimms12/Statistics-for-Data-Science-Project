@@ -1,0 +1,78 @@
+install.packages("ROCR")
+library(glm)
+library(ROCR)
+
+# I. Correlation Plot
+original_data <- read.csv("creditcard_Dataset.csv")
+
+# Plot correlation between 'Amount' and 'Class'
+correlation_plot <- plot(original_data$Amount, original_data$Class, 
+                         xlab = "Amount", ylab = "Class", 
+                         main = "Scatter Plot: Amount vs. Class", 
+                         col = ifelse(original_data$Class == 1, "red", "blue"))
+
+# II. Set Your Model
+# Set a logistic regression model
+logistic_model <- glm(Class ~ Amount, data = original_data, family = "binomial")
+
+# III. Fitting the Model
+# Load the test dataset
+test_data <- read.csv("test_data.csv")
+
+# Predict on the test data
+predictions <- predict(logistic_model, newdata = test_data, type = "response")
+
+# Provide a summary of the result
+summary(logistic_model)
+
+# Plot your model
+plot(predictions ~ test_data$Amount, 
+     xlab = "Amount", ylab = "Predicted Probability", 
+     main = "Logistic Regression Model")
+
+# Print out the confusion matrix
+conf_matrix <- table(Actual = test_data$Class, Predicted = ifelse(predictions > 0.5, 1, 0))
+print("Confusion Matrix:")
+print(conf_matrix)
+
+# Provide the ROC curve for your model
+prediction_obj <- prediction(predictions, test_data$Class)
+performance_obj <- performance(prediction_obj, "tpr", "fpr")
+plot(performance_obj, main = "ROC Curve", col = "blue", lwd = 2)
+
+# Calculate the AUC for your model’s curve
+auc_value <- performance(prediction_obj, "auc")@y.values[[1]]
+cat("AUC Value:", auc_value, "\n")
+
+# IV. More Training and Test Sets
+# Repeat Steps 2 and 3 on ten more train and test sets
+# Run algorithm for ten runs
+
+set.seed(123)  # Set a seed for reproducibility
+
+# Initialize an empty vector to store AUC values
+auc_results <- numeric(10)
+
+for (i in 1:10) {
+  # Split the data into training and test sets
+  split <- sample.split(original_data$Class, SplitRatio = 0.75)
+  train_data <- subset(original_data, split == TRUE)
+  test_data <- subset(original_data, split == FALSE)
+  
+  # Train the logistic regression model
+  logistic_model <- glm(Class ~ Amount, data = train_data, family = "binomial")
+  
+  # Apply the logistic regression model to the test data
+  predictions <- predict(logistic_model, newdata = test_data, type = "response")
+  
+  # Calculate AUC and store the result
+  prediction_obj <- prediction(predictions, test_data$Class)
+  auc_results[i] <- performance(prediction_obj, "auc")@y.values[[1]]
+}
+
+# Save all the AUC results in a table
+auc_table <- data.frame(Run = 1:10, AUC = auc_results)
+
+# Calculate the median of the results as the final result
+final_result <- median(auc_results)
+cat("Median AUC for ten runs:", final_result, "\n")
