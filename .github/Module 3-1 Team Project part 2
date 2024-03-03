@@ -5,10 +5,6 @@ library(caTools)
 # Set a seed value for reproducibility
 set.seed(123)
 
-# Assuming your original dataset is stored in a data frame called 'original_data'
-# Make sure to replace 'original_data.csv' with the actual data frame you have
-
-# Load the dataset
 original_data <- read.csv("original_data.csv")
 
 # Set the split ratio (75%/25%)
