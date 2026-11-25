@@ -17,6 +17,16 @@ This is foundational coursework. My applied work on real public data is in
 fraud-detection model (SMOTE + Random Forest) is in
 [Credit-Card-Fraud](https://github.com/jarvissimms12/Credit-Card-Fraud).
 
+## Summary
+
+| | |
+|---|---|
+| **Question** | How do the core statistics workflows (description, scaling, sampling, a first model and its evaluation) apply to a heavily imbalanced real dataset? |
+| **Data** | Kaggle credit card fraud data: 284,807 transactions, 492 fraud (0.17%) |
+| **Method** | Descriptive statistics and distribution shape of `Amount`; z-score scaling; stratified 75/25 split; logistic regression `Class ~ Amount` evaluated with a confusion matrix, ROC curve and AUC, repeated over 10 random splits with the median AUC reported |
+| **Result** | Team coursework scripts; results are produced when run with the dataset (not committed). The design point: transaction amount alone is a weak fraud signal, and evaluating across 10 splits shows how much a single AUC varies by split. |
+| **Takeaway** | Foundation for [Credit-Card-Fraud](https://github.com/jarvissimms12/Credit-Card-Fraud), which uses all features and a leak-free resampling pipeline. |
+
 ## What each script does
 
 | Script | Module | Technique |
