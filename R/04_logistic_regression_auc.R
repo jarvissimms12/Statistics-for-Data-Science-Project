@@ -1,9 +1,9 @@
-install.packages("ROCR")
-library(glm)
+# install.packages(c("ROCR", "caTools"))
+library(caTools)   # sample.split()
 library(ROCR)
 
 # I. Correlation Plot
-original_data <- read.csv("creditcard_Dataset.csv")
+original_data <- read.csv("creditcard.csv")
 
 # Plot correlation between 'Amount' and 'Class'
 correlation_plot <- plot(original_data$Amount, original_data$Class, 
@@ -12,12 +12,17 @@ correlation_plot <- plot(original_data$Amount, original_data$Class,
                          col = ifelse(original_data$Class == 1, "red", "blue"))
 
 # II. Set Your Model
-# Set a logistic regression model
-logistic_model <- glm(Class ~ Amount, data = original_data, family = "binomial")
+# Hold out 25% for testing (stratified on Class) so the model is
+# evaluated on transactions it never saw
+set.seed(123)
+split <- sample.split(original_data$Class, SplitRatio = 0.75)
+train_data <- subset(original_data, split == TRUE)
+test_data  <- subset(original_data, split == FALSE)
+
+# Logistic regression model, fit on the training set only
+logistic_model <- glm(Class ~ Amount, data = train_data, family = "binomial")
 
 # III. Fitting the Model
-# Load the test dataset
-test_data <- read.csv("test_data.csv")
 
 # Predict on the test data
 predictions <- predict(logistic_model, newdata = test_data, type = "response")

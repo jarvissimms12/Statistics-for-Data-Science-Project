@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load your dataset (replace 'your_dataset.csv' with your actual file or DataFrame)
-# df = pd.read_csv('your_dataset.csv')
+df = pd.read_csv('creditcard.csv')
 
 # Assuming 'Amount' is the column containing the transferred money
 # Replace it with the actual column name if different

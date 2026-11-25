@@ -1,11 +1,11 @@
 # Install and load the caTools package
-install.packages("caTools")
+# install.packages("caTools")
 library(caTools)
 
 # Set a seed value for reproducibility
 set.seed(123)
 
-original_data <- read.csv("original_data.csv")
+original_data <- read.csv("creditcard.csv")
 
 # Set the split ratio (75%/25%)
 split_ratio <- 0.75

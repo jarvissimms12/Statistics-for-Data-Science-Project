@@ -1,70 +1,56 @@
-📐 Statistics for Data Science — Final Project
+# 📐 Statistics for Data Science — Course Project (NYIT, 2025)
+
+![R](https://img.shields.io/badge/R-4.x-276DC3?logo=r)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python)
-![pandas](https://img.shields.io/badge/pandas-Statistical%20Analysis-150458?logo=pandas)
-![scipy](https://img.shields.io/badge/scipy-Hypothesis%20Testing-8CAAE6)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-A comprehensive applied statistics project from the MS Data Science program at New York Institute of Technology (2025). Applies core statistical methods to real-world data — covering descriptive statistics, probability distributions, hypothesis testing, regression, and visualization — demonstrating the foundational quantitative skills that underpin all data analysis work.
----
-🎯 Project Scope
-This project was completed as the final capstone for a graduate-level Statistics for Data Science course. It applies the following statistical techniques to a real dataset:
-Technique	Application
-Descriptive Statistics	Central tendency, dispersion, skewness, kurtosis
-Probability Distributions	Normal, Binomial, Poisson distribution fitting
-Hypothesis Testing	t-tests, chi-square tests, p-value interpretation
-Correlation Analysis	Pearson/Spearman correlation matrices
-Linear Regression	OLS regression, residual analysis, R² interpretation
-Data Visualization	histograms, boxplots, heatmaps, scatter matrices
----
-🔬 Key Statistical Concepts Demonstrated
-Descriptive Analysis
-Computed mean, median, mode, variance, standard deviation, and IQR across all numeric features
-Identified skewed distributions and applied appropriate transformations
-Hypothesis Testing
-Formulated null and alternative hypotheses
-Selected appropriate test statistic (t-test vs. chi-square) based on data type
-Interpreted p-values and drew statistically valid conclusions
-Regression Modeling
-Built OLS linear regression model
-Analyzed residuals for heteroscedasticity and normality
-Reported R², adjusted R², and model diagnostics
----
-🚀 How to Run
+
+Team coursework from the graduate Statistics for Data Science course in the MS Data
+Science program at New York Institute of Technology. Works through the
+[Kaggle credit card fraud dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+(284,807 transactions, 492 fraud) step by step: descriptive statistics, feature
+scaling, stratified train/test splitting, and a logistic regression baseline evaluated
+with ROC/AUC over repeated splits.
+
+This is foundational coursework. My applied work on real public data is in
+[state-of-nyc](https://github.com/jarvissimms12/state-of-nyc) and
+[nyc-heat-anomalies](https://github.com/jarvissimms12/nyc-heat-anomalies). The full
+fraud-detection model (SMOTE + Random Forest) is in
+[Credit-Card-Fraud](https://github.com/jarvissimms12/Credit-Card-Fraud).
+
+## What each script does
+
+| Script | Module | Technique |
+|---|---|---|
+| `R/01_descriptive_stats.R` | 1 | Dimensions, nulls, quartiles, variance/SD of `Amount`, violin plot by class |
+| `python/descriptive_stats.py` | 1 | Same analysis in pandas/seaborn, plus skewness and kurtosis |
+| `R/02_scale_amount.R` | 3 | Z-score standardization of `Amount` |
+| `R/03_train_test_split.R` | 3 | Stratified 75/25 split (`caTools::sample.split`), distribution check across sets |
+| `R/04_logistic_regression_auc.R` | 7 | Logistic regression `Class ~ Amount`, confusion matrix, ROC curve, AUC; repeated over 10 random splits with the median AUC reported |
+
+## How to run
+
+Download `creditcard.csv` from the Kaggle link above into the repo root, then:
+
+```r
+install.packages(c("readr", "dplyr", "ggplot2", "caTools", "ROCR"))
+source("R/01_descriptive_stats.R")
+source("R/04_logistic_regression_auc.R")
+```
+
 ```bash
-# 1. Clone the repo
-git clone https://github.com/jarvissimms12/Statistics-for-Data-Science-Project.git
-cd Statistics-for-Data-Science-Project
+pip install pandas seaborn matplotlib
+python python/descriptive_stats.py
+```
 
-# 2. Install dependencies
-pip install pandas numpy scipy matplotlib seaborn statsmodels jupyter
+## Notes
 
-# 3. Open the notebook
-jupyter notebook
-```
+- `Amount` alone is a weak predictor of fraud. The logistic model here is a
+  deliberately simple baseline for practicing evaluation (confusion matrix, ROC,
+  AUC, variance across splits), not a production fraud model.
+- With 0.17% fraud, a 0.5 probability threshold flags almost nothing. Module 7
+  reports AUC because it doesn't depend on a threshold.
+
 ---
-📁 Project Structure
-```
-Statistics-for-Data-Science-Project/
-├── [notebook or script files]    # Statistical analysis
-├── README.md
-└── data/                         # Dataset files
-```
----
-🔑 Key Skills Demonstrated
-Applied statistics — the mathematical foundation of all data science work
-Hypothesis testing — rigorous, evidence-based decision making
-Regression analysis — quantifying relationships between variables
-Python for statistics — pandas, scipy, statsmodels, seaborn
-Academic research standards — proper methodology documentation
----
-🎓 Context
-This project was completed as part of the MS Data Science program at New York Institute of Technology (2025). It represents the rigorous statistical training that complements the machine learning and data engineering skills demonstrated in other portfolio projects.
----
-🔗 Related Projects
-Media Content Analytics Dashboard — Interactive BI dashboard with Streamlit & Plotly
-NYC Housing Data Analysis — Real-world data pipeline with NYC Open Data API
-Credit Card Fraud Detection — Imbalanced classification with SMOTE + Random Forest
-Agricultural Crop Classifier — Deep learning with ResNet50, 81.9% accuracy
----
-👤 Author
-Jarvis Simms | MS Data Science, NYIT 2025 | Brooklyn, NY  
-GitHub • LinkedIn
+
+**Jarvis Simms** | MS Data Science, NYIT 2025 | Brooklyn, NY ·
+[GitHub](https://github.com/jarvissimms12) · [LinkedIn](https://www.linkedin.com/in/jarvis-simms-846062136/)
